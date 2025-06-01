@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      main {
+        padding: 30px;
+        text-align: center;
+        max-width: 800px;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 0.5em;
+      }
+
+      p {
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 1em;
+        color: #555;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 1.1em;
+        color: white;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .btn:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
+
+      .api-status {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e0ffe0;
+        border: 1px solid #4caf50;
+        border-radius: 8px;
+        color: #4caf50;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <p>Welcome to the <%= title %>! We are glad to have you here.</p>
+      <p>
+        This is a sample page created using Node.js and the EJS template engine.
+      </p>
+      <a
+        href="https://nodejs.org/en/learn/getting-started/introduction-to-nodejs"
+        target="_blank"
+        class="btn"
+        >Learn More</a
+      >
+
+      <!-- API status section -->
+      <div class="api-status">
+        <p>API is working <span style="color: green"></span></p>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        &copy; 2024 Rajesh Alachandra. All rights reserved. |
+        <a target="_blank" href="https://rajeshalachandra.netlify.app/"
+          >Visit our website</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>
