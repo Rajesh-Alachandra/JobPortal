@@ -1,8 +1,6 @@
-// models/JobSeeker.js
-
+// Updated models/JobSeeker.js
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/db.js';
-import bcrypt from 'bcrypt';
 
 const JobSeeker = sequelize.define('JobSeeker', {
     id: {
@@ -10,24 +8,21 @@ const JobSeeker = sequelize.define('JobSeeker', {
         primaryKey: true,
         autoIncrement: true
     },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Users',
+            key: 'id'
+        },
+        onDelete: 'CASCADE'
+    },
     firstName: {
         type: DataTypes.STRING(50),
         allowNull: false
     },
     lastName: {
         type: DataTypes.STRING(50),
-        allowNull: false
-    },
-    email: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true,
-        validate: {
-            isEmail: true
-        }
-    },
-    password: {
-        type: DataTypes.STRING(255),
         allowNull: false
     },
     phone: {
@@ -94,30 +89,9 @@ const JobSeeker = sequelize.define('JobSeeker', {
     profileImage: {
         type: DataTypes.STRING(255),
         allowNull: true
-    },
-    isActive: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
     }
 }, {
-    timestamps: true,
-    hooks: {
-        beforeCreate: async (jobSeeker) => {
-            if (jobSeeker.password) {
-                jobSeeker.password = await bcrypt.hash(jobSeeker.password, 10);
-            }
-        },
-        beforeUpdate: async (jobSeeker) => {
-            if (jobSeeker.changed('password')) {
-                jobSeeker.password = await bcrypt.hash(jobSeeker.password, 10);
-            }
-        }
-    }
+    timestamps: true
 });
-
-// Compare hashed password
-JobSeeker.prototype.comparePassword = async function (password) {
-    return bcrypt.compare(password, this.password);
-};
 
 export default JobSeeker;

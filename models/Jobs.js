@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js'; // Make sure the path and filename include `.js` extension
-import Employer from './Employer.js'; // Also make sure Employer is an ES module
+import sequelize from '../config/database.js';
+import Employer from './Employer.js';
 
 const Job = sequelize.define('Job', {
     id: {
@@ -10,10 +10,15 @@ const Job = sequelize.define('Job', {
     },
     title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'job_description' // Maps to jobDescription from your data
     },
     description: {
         type: DataTypes.TEXT,
+        allowNull: true
+    },
+    companyName: {
+        type: DataTypes.STRING,
         allowNull: false
     },
     location: {
@@ -22,6 +27,53 @@ const Job = sequelize.define('Job', {
     },
     salary: {
         type: DataTypes.DECIMAL,
+        allowNull: true
+    },
+    timing: {
+        type: DataTypes.ENUM('Full Time', 'Part Time', 'Freelance', 'Internship'),
+        allowNull: false,
+        defaultValue: 'Full Time'
+    },
+    experience: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    companyImg: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    jobPostTime: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    isBookmarked: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        field: 'add_class_name_bookmark'
+    },
+    badges: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        defaultValue: []
+    },
+    isFullTime: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    isPartTime: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    isFreelance: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    isInternship: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    category: {
+        type: DataTypes.STRING,
         allowNull: true
     },
     employerId: {
@@ -34,7 +86,16 @@ const Job = sequelize.define('Job', {
     }
 }, {
     tableName: 'Jobs',
-    timestamps: true
+    timestamps: true,
+    hooks: {
+        beforeSave: (job) => {
+            // Auto-set boolean flags based on timing
+            job.isFullTime = job.timing === 'Full Time';
+            job.isPartTime = job.timing === 'Part Time';
+            job.isFreelance = job.timing === 'Freelance';
+            job.isInternship = job.timing === 'Internship';
+        }
+    }
 });
 
 // Association
