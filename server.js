@@ -16,6 +16,7 @@ import { initializeSocket } from "./utils/socket.js";
 import setupSwagger from "./config/swagger.js";
 import logger from "./utils/logger.js";
 import authRoutes from "./routes/auth.js"; // Add auth routes
+import jobRoutes from "./routes/jobRoutes.js"; // Add job routes
 
 //!!!!! App
 const app = express();
@@ -47,6 +48,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 //***** Define routes
 app.use('/api/auth', authRoutes); // Add auth routes
+app.use('/api/jobs', jobRoutes); // Add job routes
 
 
 //****** */ Serve static files from 'uploads' folder
